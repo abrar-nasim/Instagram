@@ -1,0 +1,16 @@
+{
+  "name": "instagram-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",      // Starts the development server
+    "build": "next build",  // Builds the app for production
+    "start": "next start"   // Starts the production server
+  },
+  "dependencies": {
+    "next": "latest",       // Next.js framework for server-side rendering
+    "react": "latest",      // React library for UI components
+    "react-dom": "latest",  // React DOM for rendering in browser
+    "axios": "^0.27.2"      // Axios for API requests
+  }
+}
