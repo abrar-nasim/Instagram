@@ -1,7 +1,3 @@
-"""
-Django settings for the Instagram Website project.
-This file contains configuration for the database, installed apps, middleware, templates, etc.
-"""
 import os
 from pathlib import Path
 
@@ -29,11 +25,13 @@ INSTALLED_APPS = [
     'users',                # Custom app for user authentication and management
     'listings',             # Custom app for managing Instagram listings
     'admin_dashboard',      # Custom app for the admin dashboard
+    'django_extensions'
+
 ]
 
 # Middleware: Processes request/response
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Correct CORS Middleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -89,5 +87,11 @@ STATIC_URL = '/static/'
 # Default auto field for models
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS settings: Allow all origins (adjust for production)
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+DEBUG = True
