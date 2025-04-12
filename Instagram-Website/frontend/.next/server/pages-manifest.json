@@ -2,7 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/contact": "pages/contact.js",
-  "/admin": "pages/admin.js",
-  "/": "pages/index.js"
+  "/listing/[id]": "pages/listing/[id].js",
+  "/contact-info": "pages/contact-info.js",
+  "/": "pages/index.js",
+  "/contact": "pages/contact.js"
 }

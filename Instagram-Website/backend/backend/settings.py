@@ -48,7 +48,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'backend/templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -95,3 +95,5 @@ CORS_ALLOWED_ORIGINS = [
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 DEBUG = True
+CORS_ALLOW_CREDENTIALS = True
+

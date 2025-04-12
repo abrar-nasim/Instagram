@@ -14,6 +14,8 @@ class InstagramListing(models.Model):
     # Optional: you can add an is_sold flag if needed
     is_sold = models.BooleanField(default=False)
     image = models.ImageField(upload_to='uploads/', null=True, blank=True)
+    is_featured = models.BooleanField(default=False)
+
 
     def __str__(self):
         return f'{self.username} - {self.niche}'

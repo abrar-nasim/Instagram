@@ -1,7 +1,5 @@
-// Import necessary modules
 import React, { useState } from 'react';
-import axios from 'axios';
-
+import axios from 'axios'
 /**
  * InquiryForm component: Form for buyers to submit inquiries about a listing.
  * Props: 'listing' object to pre-fill some details.
@@ -21,15 +19,21 @@ export default function InquiryForm({ listing }) {
   };
 
   // Submit the inquiry form
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevents default form submission (which would trigger a GET request)
     setStatus('Submitting...');
+    
     try {
-      // Post inquiry data to the backend API
-      await axios.post('http://localhost:8000/api/inquiries/', {
-        ...formData,
-        listing_id: listing.id,
-      });
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/listings/inquiries/',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json' // Ensure the request is sent as JSON
+          }
+        }
+      );
+  
       setStatus('Inquiry submitted successfully!');
       setFormData({ name: '', email: '', message: '', proposed_price: '' });
     } catch (error) {
@@ -37,7 +41,7 @@ export default function InquiryForm({ listing }) {
       setStatus('Failed to submit inquiry.');
     }
   };
-
+  
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} className="w-full p-2 border rounded" required />

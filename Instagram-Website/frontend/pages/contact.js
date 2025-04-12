@@ -1,27 +1,51 @@
-// Import necessary modules and components
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
-
 /**
  * Contact component: Provides a form for buyers to submit inquiries.
  * On submission, the inquiry is sent to the backend API.
  */
+
+function getCSRFToken() {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, 10) === 'csrftoken=') {
+        cookieValue = decodeURIComponent(cookie.substring(10));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '', proposed_price: '' });
   const [status, setStatus] = useState('');
-
   // Update state when form inputs change
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Handle form submission
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevents default form submission (which would trigger a GET request)
     setStatus('Submitting...');
+    
     try {
-      await axios.post('http://localhost:8000/api/inquiries/', formData);
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/listings/inquiries/',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json' // Ensure the request is sent as JSON
+          }
+        }
+      );
+  
       setStatus('Inquiry submitted successfully!');
       setFormData({ name: '', email: '', message: '', proposed_price: '' });
     } catch (error) {
@@ -29,6 +53,7 @@ export default function Contact() {
       setStatus('Failed to submit inquiry.');
     }
   };
+  
 
   return (
     <div>

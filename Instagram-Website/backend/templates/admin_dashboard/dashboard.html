@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { padding: 8px 12px; border: 1px solid #ccc; text-align: center; }
+        th { background-color: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Instagram Username</th>
+                <th>Price</th>
+                <th>Followers</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for listing in listings %}
+                <tr>
+                    <td>{{ listing.id }}</td>
+                    <td>{{ listing.username }}</td>
+                    <td>₹{{ listing.price }}</td>
+                    <td>{{ listing.followers }}</td>
+                    <td>{{ listing.created_at }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No listings found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
