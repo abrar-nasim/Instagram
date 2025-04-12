@@ -17,22 +17,29 @@ export default function ListingDetail() {
     }
   }, [id]);
 
-  if (!listing) return <div className="p-4">Loading...</div>;
+  if (!listing) return (
+    <div className="bg-gray-50 min-h-screen p-6">
+      <Navbar />
+      <div className="container mx-auto text-center py-20 text-gray-500 text-lg">Loading...</div>
+    </div>
+  );
 
   return (
-    <>
+    <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-4">Listing Details</h1>
-        <div className="bg-white shadow-md p-6 rounded">
-          <p><strong>Username:</strong> {listing.username}</p>
-          <p><strong>Followers:</strong> {listing.followers}</p>
-          <p><strong>Niche:</strong> {listing.niche}</p>
-          <p><strong>Price:</strong> ${listing.price}</p>
-          <p><strong>Contact Email:</strong> {listing.contact_email}</p>
-          <p><strong>Sold:</strong> {listing.is_sold ? 'Yes' : 'No'}</p>
+
+      <div className="container mx-auto px-6 py-12">
+        <h1 className="text-4xl font-bold text-center mb-10">Listing Details</h1>
+
+        <div className="bg-white rounded-xl shadow-lg p-8 max-w-xl mx-auto space-y-4 text-lg">
+          <p><span className="font-semibold">Username:</span> {listing.username}</p>
+          <p><span className="font-semibold">Followers:</span> {listing.followers}</p>
+          <p><span className="font-semibold">Niche:</span> {listing.niche}</p>
+          <p><span className="font-semibold">Price:</span> ${listing.price}</p>
+          <p><span className="font-semibold">Contact Email:</span> {listing.contact_email}</p>
+          <p><span className="font-semibold">Sold:</span> {listing.is_sold ? 'Yes' : 'No'}</p>
         </div>
       </div>
-    </>
+    </div>
   );
 }

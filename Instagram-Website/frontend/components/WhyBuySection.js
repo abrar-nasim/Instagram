@@ -10,14 +10,22 @@ const WhyBuySection = () => {
   ];
 
   return (
-    <section className="py-20">
-      <div className="container mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-10">Why Buy Instagram Accounts from Us?</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <section className="bg-gray-50 py-20">
+      <div className="container mx-auto px-6 text-center max-w-4xl">
+        <h2 className="text-4xl font-extrabold text-gray-800 mb-10">
+          Why Buy Instagram Accounts from Us?
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {benefits.map((benefit, index) => (
-            <div key={index} className="flex items-center p-4 bg-gray-50 rounded-lg shadow-md">
-              <CheckCircle className="text-green-500 mr-4" size={32} />
-              <p className="text-lg font-medium">{benefit}</p>
+            <div
+              key={index}
+              className="flex items-center bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-200 text-left"
+            >
+              <CheckCircle className="text-green-500 mr-4 min-w-[32px]" size={28} />
+              <p className="text-base sm:text-lg text-gray-700 font-medium">
+                {benefit}
+              </p>
             </div>
           ))}
         </div>

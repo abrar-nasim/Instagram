@@ -16,17 +16,13 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      {/* Navbar at the Top */}
+    <div className="bg-gray-50 min-h-screen">
       <Navbar />
-
-      {/* Hero Section for Main Heading and CTA */}
       <HeroSection />
 
-      {/* Display Listings */}
-      <div className="container mx-auto p-6">
-
-        <div className="flex justify-center mb-8">
+      <section className="container mx-auto px-6 py-12">
+        {/* Filter Dropdown */}
+        <div className="flex justify-center mb-10">
           <select
             onChange={(e) => {
               const selectedNiche = e.target.value;
@@ -40,7 +36,6 @@ export default function Home() {
             }}
             className="bg-white border border-gray-300 rounded-xl shadow-md px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 max-h-48 overflow-y-auto transition-all duration-300"
             defaultValue=""
-            size={1}
           >
             <option value="">All Niches</option>
             <option value="fashion">Fashion</option>
@@ -58,23 +53,21 @@ export default function Home() {
           </select>
         </div>
 
+        {/* Listings Section */}
+        <h1 className="text-4xl font-bold text-center mb-10">🔥 Top Picks for You</h1>
 
-        <h1 className="text-4xl font-bold text-center mb-8">🔥 Top Picks for You</h1>
         {listings.length === 0 ? (
           <p className="text-center text-gray-500">No listings available. Please check back later.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {listings.map((listing) => (
               <ListingCard key={listing.id} listing={listing} />
             ))}
           </div>
         )}
-      </div>
+      </section>
 
-      {/* Why Buy Section for Trust Building */}
       <WhyBuySection />
-
-      {/* Footer for Links and Info */}
       <Footer />
     </div>
   );

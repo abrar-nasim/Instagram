@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
-/**
- * Contact component: Provides a form for buyers to submit inquiries.
- * On submission, the inquiry is sent to the backend API.
- */
 
 function getCSRFToken() {
   let cookieValue = null;
@@ -21,18 +17,16 @@ function getCSRFToken() {
   return cookieValue;
 }
 
-
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '', proposed_price: '' });
   const [status, setStatus] = useState('');
-  // Update state when form inputs change
+
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevents default form submission (which would trigger a GET request)
+    e.preventDefault();
     setStatus('Submitting...');
     
     try {
@@ -41,7 +35,7 @@ export default function Contact() {
         formData,
         {
           headers: {
-            'Content-Type': 'application/json' // Ensure the request is sent as JSON
+            'Content-Type': 'application/json'
           }
         }
       );
@@ -53,21 +47,58 @@ export default function Contact() {
       setStatus('Failed to submit inquiry.');
     }
   };
-  
 
   return (
-    <div>
+    <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} className="w-full p-2 border rounded" required />
-          <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} className="w-full p-2 border rounded" required />
-          <input type="text" name="proposed_price" placeholder="Your Offer Price (optional)" value={formData.proposed_price} onChange={handleChange} className="w-full p-2 border rounded" />
-          <textarea name="message" placeholder="Your Message" value={formData.message} onChange={handleChange} className="w-full p-2 border rounded" required />
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded">Send Inquiry</button>
+
+      <div className="container mx-auto px-6 py-12 max-w-2xl">
+        <h1 className="text-4xl font-bold mb-8 text-center">Contact Us</h1>
+
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-xl shadow-md">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <input
+            type="text"
+            name="proposed_price"
+            placeholder="Your Offer Price (optional)"
+            value={formData.proposed_price}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <textarea
+            name="message"
+            placeholder="Your Message"
+            value={formData.message}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-4 py-2 h-32 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition"
+          >
+            Send Inquiry
+          </button>
         </form>
-        {status && <p className="mt-2">{status}</p>}
+
+        {status && <p className="text-center mt-4 text-sm text-gray-600">{status}</p>}
       </div>
     </div>
   );

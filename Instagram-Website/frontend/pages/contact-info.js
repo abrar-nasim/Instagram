@@ -3,11 +3,13 @@ import Footer from '../components/Footer';
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      <div className="container mx-auto px-4 py-12 max-w-2xl">
-        <h1 className="text-3xl font-bold mb-6 text-center">Contact Us</h1>
-        <div className="space-y-4 text-lg text-gray-800">
+
+      <div className="container mx-auto px-6 py-12 max-w-2xl">
+        <h1 className="text-4xl font-bold text-center mb-10">Contact Us</h1>
+
+        <div className="space-y-6 bg-white p-8 rounded-xl shadow-md text-lg text-gray-800">
           <p>
             <strong>📸 Instagram:</strong>{' '}
             <a
@@ -49,7 +51,8 @@ export default function ContactPage() {
           </p>
         </div>
       </div>
+
       <Footer />
-    </>
+    </div>
   );
 }
