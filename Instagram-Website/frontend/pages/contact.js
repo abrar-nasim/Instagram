@@ -1,105 +1,141 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
-
-function getCSRFToken() {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.substring(0, 10) === 'csrftoken=') {
-        cookieValue = decodeURIComponent(cookie.substring(10));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
+import { Mail, User, Send, DollarSign, MessageSquare } from 'lucide-react';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '', proposed_price: '' });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+    proposed_price: ''
+  });
   const [status, setStatus] = useState('');
 
-  const handleChange = e => {
+  const handleChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('Submitting...');
-    
+
     try {
+      // const response = await axios.post(
+      //   'http://127.0.0.1:8000/api/listings/inquiries/',
+      //   formData,
+      //   {
+      //     headers: {
+      //       'Content-Type': 'application/json'
+      //     }
+      //   }
+      // );
+
+      const formattedData = {
+        ...formData,
+        proposed_price: formData.proposed_price === '' ? null : parseFloat(formData.proposed_price)
+      };
+
+
       const response = await axios.post(
         'http://127.0.0.1:8000/api/listings/inquiries/',
-        formData,
+        formattedData,
         {
           headers: {
             'Content-Type': 'application/json'
           }
         }
       );
-  
-      setStatus('Inquiry submitted successfully!');
+
+
+
+      setStatus('✅ Inquiry submitted successfully!');
       setFormData({ name: '', email: '', message: '', proposed_price: '' });
     } catch (error) {
       console.error('Error submitting inquiry:', error);
-      setStatus('Failed to submit inquiry.');
+      setStatus('❌ Failed to submit inquiry.');
     }
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
       <Navbar />
+      <section className="py-20 px-4 sm:px-6 max-w-xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-xl p-8 sm:p-10">
+          <h1 className="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-6">Send Us Your Bid!!</h1>
 
-      <div className="container mx-auto px-6 py-12 max-w-2xl">
-        <h1 className="text-4xl font-bold mb-8 text-center">Contact Us</h1>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Name */}
+            <div className="relative">
+              <User className="absolute top-3.5 left-3 text-gray-400" size={18} />
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              />
+            </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-xl shadow-md">
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            required
-          />
-          <input
-            type="text"
-            name="proposed_price"
-            placeholder="Your Offer Price (optional)"
-            value={formData.proposed_price}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            value={formData.message}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-4 py-2 h-32 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            required
-          />
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition"
-          >
-            Send Inquiry
-          </button>
-        </form>
+            {/* Email */}
+            <div className="relative">
+              <Mail className="absolute top-3.5 left-3 text-gray-400" size={18} />
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              />
+            </div>
 
-        {status && <p className="text-center mt-4 text-sm text-gray-600">{status}</p>}
-      </div>
+            {/* Offer Price */}
+            <div className="relative">
+              <DollarSign className="absolute top-3.5 left-3 text-gray-400" size={18} />
+              <input
+                type="number"
+                name="proposed_price"
+                placeholder="Your Offer Price (optional)"
+                value={formData.proposed_price}
+                onChange={handleChange}
+                min="0"
+                step="0.01"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+
+            </div>
+
+            {/* Message */}
+            <div className="relative">
+              <MessageSquare className="absolute top-3 left-3 text-gray-400" size={18} />
+              <textarea
+                name="message"
+                placeholder="Page you want to buy"
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl h-28 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              />
+            </div>
+
+            {/* Button */}
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-md"
+            >
+              Send Inquiry
+            </button>
+          </form>
+
+          {/* Status Message */}
+          {status && (
+            <p className="text-center mt-4 text-sm text-gray-600">{status}</p>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

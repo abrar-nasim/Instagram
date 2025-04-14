@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-8 mt-16 border-t border-gray-700">
+    <footer className="bg-gray-800 text-white py-8 border-t border-gray-700">
       <div className="container mx-auto px-6 text-center">
         <p className="mb-4 text-sm text-gray-400">
           &copy; {new Date().getFullYear()} Instagram Marketplace. All Rights Reserved.

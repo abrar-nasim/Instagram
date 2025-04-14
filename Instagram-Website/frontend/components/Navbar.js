@@ -11,7 +11,7 @@ export default function Navbar() {
         {/* Brand */}
         <Link href="/" legacyBehavior>
           <a className="text-2xl font-bold tracking-wide hover:text-blue-400 transition-colors duration-200">
-            InstaMarket
+            HellyeahMedia
           </a>
         </Link>
 

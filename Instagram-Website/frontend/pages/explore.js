@@ -14,16 +14,20 @@ export default function ExploreListings() {
   }, []);
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gradient-to-b from-gray-50 to-white min-h-screen">
       <Navbar />
 
-      <section className="container mx-auto px-6 py-12">
-        <h1 className="text-4xl font-bold text-center mb-10">All Instagram Accounts for Sale</h1>
+      <section className="container mx-auto px-4 sm:px-8 py-12">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-center text-gray-800 mb-10 tracking-tight">
+          📱 All Instagram Accounts for Sale
+        </h1>
 
         {listings.length === 0 ? (
-          <p className="text-center text-gray-500">No listings available.</p>
+          <p className="text-center text-gray-500 italic mt-6">
+            No listings available. Please check back later.
+          </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 animate-fade-in">
             {listings.map((listing) => (
               <ListingCard key={listing.id} listing={listing} />
             ))}
