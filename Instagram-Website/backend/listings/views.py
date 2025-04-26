@@ -9,6 +9,11 @@ from .serializers import ListingSerializer
 from rest_framework import generics
 from .models import InstagramListing
 from .serializers import ListingSerializer
+from django.http import HttpResponse
+
+def test_listings_view(request):
+    return HttpResponse("✅ Listings API is working!")
+
 
 class ListingListCreateView(generics.ListCreateAPIView):
     queryset = InstagramListing.objects.all()
