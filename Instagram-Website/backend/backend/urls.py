@@ -14,21 +14,21 @@ from django.contrib.auth import get_user_model
 
 print("✅ This is the correct urls.py being loaded.")
 
-# Temporary function to auto-migrate and create a superuser
-def run_startup_commands():
-    try:
-        call_command("migrate", interactive=False)
-        User = get_user_model()
-        if not User.objects.filter(username="admin").exists():
-            User.objects.create_superuser("admin", "admin@example.com", "admin123")
-            print("✅ Superuser 'admin' created.")
-        else:
-            print("ℹ️ Superuser already exists.")
-    except Exception as e:
-        print("❌ Migration or superuser creation failed:", e)
+# # Temporary function to auto-migrate and create a superuser
+# def run_startup_commands():
+#     try:
+#         call_command("migrate", interactive=False)
+#         User = get_user_model()
+#         if not User.objects.filter(username="admin").exists():
+#             User.objects.create_superuser("admin", "admin@example.com", "admin123")
+#             print("✅ Superuser 'admin' created.")
+#         else:
+#             print("ℹ️ Superuser already exists.")
+#     except Exception as e:
+#         print("❌ Migration or superuser creation failed:", e)
 
 
-run_startup_commands()
+# run_startup_commands()
 
 # View functions
 def admin_test_view(request):
@@ -39,6 +39,7 @@ def home_test_view(request):
 
 # URL patterns
 urlpatterns = [
+    path('', home_test_view),  # Root/homepage test route
     path('admin/', admin.site.urls),  # Django admin panel
     path('api/users/', include('users.urls')),  # User-related endpoints
     path('api/listings/', include('listings.urls')),  # Instagram listings endpoints
