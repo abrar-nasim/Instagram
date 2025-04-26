@@ -14,6 +14,16 @@ from django.contrib.auth import get_user_model
 
 print("✅ This is the correct urls.py being loaded.")
 
+from django.core.management import call_command
+
+def migrate_view(request):
+    try:
+        call_command("migrate", interactive=False)
+        return HttpResponse("✅ Migration success")
+    except Exception as e:
+        return HttpResponse(f"❌ Migration failed: {e}")
+
+
 # # Temporary function to auto-migrate and create a superuser
 # def run_startup_commands():
 #     try:
@@ -54,13 +64,4 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
-from django.core.management import call_command
-
-def migrate_view(request):
-    try:
-        call_command('migrate', interactive=False)
-        return HttpResponse("✅ Migration success")
-    except Exception as e:
-        return HttpResponse(f"❌ Migration failed: {e}")
 
