@@ -3,6 +3,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
 
+
 load_dotenv()
 
 # Base directory
@@ -68,6 +69,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
+
 
 # Static files
 STATIC_URL = '/static/'
