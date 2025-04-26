@@ -27,6 +27,7 @@ def run_startup_commands():
     except Exception as e:
         print("❌ Migration or superuser creation failed:", e)
 
+
 run_startup_commands()
 
 # View functions
@@ -51,3 +52,4 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
+print("💡 Django loaded this urls.py ✅")
