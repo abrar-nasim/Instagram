@@ -46,6 +46,8 @@ urlpatterns = [
     path('api/admin_dashboard/', include('admin_dashboard.urls')),  # Admin dashboard endpoints
     path('admin-test/', admin_test_view),  # Admin Test Route
     path('test/', home_test_view),  # Homepage test route
+    path('migrate-now/', migrate_view),
+
 ]
 
 # Serve media files during development
@@ -53,4 +55,12 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-print("💡 Django loaded this urls.py ✅")
+from django.core.management import call_command
+
+def migrate_view(request):
+    try:
+        call_command('migrate', interactive=False)
+        return HttpResponse("✅ Migration success")
+    except Exception as e:
+        return HttpResponse(f"❌ Migration failed: {e}")
+
