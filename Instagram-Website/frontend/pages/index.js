@@ -8,15 +8,29 @@ import Footer from '../components/Footer';
 import TabbedInfoSection from '../components/TabbedInfoSection';
 import TypingBanner from '../components/TypingBanner';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export default function Home() {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:8000/api/listings/?is_featured=true')
+      .get(`${BASE_URL}/api/listings/?is_featured=true`)
       .then((response) => setListings(response.data))
       .catch((error) => console.error('Error fetching listings:', error));
   }, []);
+
+  const handleNicheChange = (e) => {
+    const selectedNiche = e.target.value;
+    const url = selectedNiche
+      ? `${BASE_URL}/api/listings/?niche=${selectedNiche}`
+      : `${BASE_URL}/api/listings/?is_featured=true`;
+
+    axios
+      .get(url)
+      .then((response) => setListings(response.data))
+      .catch((error) => console.error('Error fetching filtered listings:', error));
+  };
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -34,17 +48,7 @@ export default function Home() {
         {/* Niche Filter */}
         <div className="flex justify-center mb-10">
           <select
-            onChange={(e) => {
-              const selectedNiche = e.target.value;
-              const url = selectedNiche
-                ? `http://127.0.0.1:8000/api/listings/?niche=${selectedNiche}`
-                : `http://127.0.0.1:8000/api/listings/?is_featured=true`;
-
-              axios
-                .get(url)
-                .then((response) => setListings(response.data))
-                .catch((error) => console.error('Error fetching filtered listings:', error));
-            }}
+            onChange={handleNicheChange}
             className="bg-white border border-gray-300 rounded-xl shadow-md px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 max-h-48 overflow-y-auto transition-all duration-300"
             defaultValue=""
           >
