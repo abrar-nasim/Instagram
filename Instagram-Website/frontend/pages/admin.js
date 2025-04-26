@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   const [statusType, setStatusType] = useState(''); // 'success' or 'error'
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/listings/')
+    axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/listings/`)
       .then(response => setListings(response.data))
       .catch(error => {
         console.error('Error fetching listings:', error);
@@ -20,7 +20,7 @@ export default function AdminDashboard() {
 
   const handleDelete = async id => {
     try {
-      await axios.delete(`http://localhost:8000/api/listings/${id}/`);
+      await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/listings/${id}/`);
       setListings(listings.filter(listing => listing.id !== id));
       setStatus('Listing deleted successfully.');
       setStatusType('success');

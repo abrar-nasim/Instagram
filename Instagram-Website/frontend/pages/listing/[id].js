@@ -23,11 +23,11 @@ export default function ListingDetail() {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://127.0.0.1:8000/api/listings/${id}/`)
+      axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/listings/${id}/`)
         .then(res => {
           setListing(res.data);
           if (res.data?.niche) {
-            axios.get(`http://127.0.0.1:8000/api/listings/?niche=${res.data.niche}`)
+            axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/listings/?niche=${res.data.niche}`)
               .then(r => {
                 const filtered = r.data.filter(item => item.id !== res.data.id);
                 setRelated(filtered.slice(0, 4));
@@ -103,7 +103,7 @@ export default function ListingDetail() {
   );
 }
 
-// Reusable listing field block
+// Reusable field block
 const Field = ({ icon, label, value }) => (
   <p className="flex items-center gap-3 text-gray-700 text-sm sm:text-base bg-gray-50 px-3 py-2 rounded-lg border border-gray-100 shadow-sm">
     {icon}

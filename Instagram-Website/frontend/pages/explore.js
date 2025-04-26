@@ -4,11 +4,13 @@ import Navbar from '../components/Navbar';
 import ListingCard from '../components/ListingCard';
 import Footer from '../components/Footer';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export default function ExploreListings() {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/listings/')
+    axios.get(`${BASE_URL}/api/listings/`)
       .then(response => setListings(response.data))
       .catch(error => console.error('Error fetching listings:', error));
   }, []);

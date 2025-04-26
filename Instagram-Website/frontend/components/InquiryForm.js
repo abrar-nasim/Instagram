@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios'
-/**
- * InquiryForm component: Form for buyers to submit inquiries about a listing.
- * Props: 'listing' object to pre-fill some details.
- */
+import axios from 'axios';
+
 export default function InquiryForm({ listing }) {
   const [formData, setFormData] = useState({
     name: '',
@@ -13,33 +10,22 @@ export default function InquiryForm({ listing }) {
   });
   const [status, setStatus] = useState('');
 
-  // Handle changes in form fields
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Submit the inquiry form
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevents default form submission (which would trigger a GET request)
+    e.preventDefault();
     setStatus('Submitting...');
 
-    try {
-      // const response = await axios.post(
-      //   'http://127.0.0.1:8000/api/listings/inquiries/',
-      //   formData,
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/json' // Ensure the request is sent as JSON
-      //     }
-      //   }
-      // );
-      const formattedData = {
-        ...formData,
-        proposed_price: formData.proposed_price === '' ? null : parseFloat(formData.proposed_price)
-      };
+    const formattedData = {
+      ...formData,
+      proposed_price: formData.proposed_price === '' ? null : parseFloat(formData.proposed_price)
+    };
 
+    try {
       const response = await axios.post(
-        'http://127.0.0.1:8000/api/listings/inquiries/',
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/listings/inquiries/`,
         formattedData,
         {
           headers: {
@@ -47,7 +33,6 @@ export default function InquiryForm({ listing }) {
           }
         }
       );
-
 
       setStatus('Inquiry submitted successfully!');
       setFormData({ name: '', email: '', message: '', proposed_price: '' });

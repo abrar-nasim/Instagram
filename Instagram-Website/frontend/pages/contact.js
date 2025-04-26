@@ -20,24 +20,13 @@ export default function Contact() {
     setStatus('Submitting...');
 
     try {
-      // const response = await axios.post(
-      //   'http://127.0.0.1:8000/api/listings/inquiries/',
-      //   formData,
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     }
-      //   }
-      // );
-
       const formattedData = {
         ...formData,
         proposed_price: formData.proposed_price === '' ? null : parseFloat(formData.proposed_price)
       };
 
-
       const response = await axios.post(
-        'http://127.0.0.1:8000/api/listings/inquiries/',
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/listings/inquiries/`,
         formattedData,
         {
           headers: {
@@ -45,8 +34,6 @@ export default function Contact() {
           }
         }
       );
-
-
 
       setStatus('✅ Inquiry submitted successfully!');
       setFormData({ name: '', email: '', message: '', proposed_price: '' });
@@ -105,7 +92,6 @@ export default function Contact() {
                 step="0.01"
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-
             </div>
 
             {/* Message */}

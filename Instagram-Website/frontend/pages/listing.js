@@ -13,9 +13,11 @@ export default function Listing() {
   const { id } = router.query;
   const [listing, setListing] = useState(null);
 
+  const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   useEffect(() => {
     if (id) {
-      axios.get(`http://localhost:8000/api/listings/${id}/`)
+      axios.get(`${BASE_URL}/api/listings/${id}/`)
         .then(response => setListing(response.data))
         .catch(error => console.error('Error fetching listing:', error));
     }
@@ -30,7 +32,7 @@ export default function Listing() {
         <h1 className="text-3xl font-bold">{listing.username}</h1>
         <p>Niche: {listing.niche}</p>
         <p>Followers: {listing.followers}</p>
-        <p>Price: ${listing.price}</p>
+        <p>Price: ₹{listing.price}</p>
       </div>
     </div>
   );
