@@ -34,9 +34,26 @@ def db_check_view(request):
         return HttpResponse("✅ Database Connected Successfully!")
     except Exception as e:
         return HttpResponse(f"❌ Database Connection Failed: {e}")
+    
+from django.contrib.auth import get_user_model
+
+def create_superuser_view(request):
+    User = get_user_model()
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            username="admin",
+            email="admin@example.com",
+            password="admin123"
+        )
+        return HttpResponse("✅ Superuser created: admin/admin123")
+    else:
+        return HttpResponse("ℹ️ Superuser already exists")
+
 
 # URL patterns
 urlpatterns = [
+    path('create-superuser/', create_superuser_view),
+
     path('', home_test_view),  # Root/homepage test route
     path('admin/', admin.site.urls),  # Django admin panel
     path('api/users/', include('users.urls')),  # User-related endpoints
