@@ -11,7 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False") == "True"
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,instagram-backend-tsf9.onrender.com").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") + [
+    "instagram-production-b0c00.up.railway.app"
+]
 
 # Installed apps
 INSTALLED_APPS = [
@@ -110,3 +112,6 @@ CSRF_COOKIE_SECURE = False  # Same
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
+
+
+CORS_REDEPLOY_HACK = True
