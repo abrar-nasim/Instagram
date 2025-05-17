@@ -38,16 +38,29 @@ class ListingListCreateView(generics.ListCreateAPIView):
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Inquiry
-from .serializers import InquirySerializer
+from rest_framework.permissions import AllowAny
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
+@method_decorator(csrf_exempt, name='dispatch')  # ✅ exempt CSRF
 class InquiryView(APIView):
+    permission_classes = [AllowAny]  # ✅ allow any origin
+
+    def options(self, request, *args, **kwargs):
+        """Handles CORS preflight"""
+        response = Response(status=status.HTTP_200_OK)
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
+
     def post(self, request):
         serializer = InquirySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 from rest_framework.generics import RetrieveAPIView
 
