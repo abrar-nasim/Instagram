@@ -31,18 +31,21 @@ INSTALLED_APPS = [
     'django_extensions',
 ]
 
-# Middleware
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',             # ✅ FIRST
+    'corsheaders.middleware.CorsMiddleware',     # ✅ MUST BE FIRST
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',  # ✅ This should come AFTER corsheaders
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+print("🚨 CORS CONFIG LOADED")
+print("CORS_ALLOWED_ORIGINS:", CORS_ALLOWED_ORIGINS)
 
 
 # URL settings
@@ -119,3 +122,4 @@ X_FRAME_OPTIONS = 'DENY'
 
 
 CORS_REDEPLOY_HACK = True
+CORS_ALLOW_ALL_ORIGINS = True
