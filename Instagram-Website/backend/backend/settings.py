@@ -92,13 +92,13 @@ USE_TZ = True
 # Default auto field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://instagram-ffns9kn6u-abrars-projects-9b912271.vercel.app",
-    "https://instagram-ochre-kappa.vercel.app",
-]
+# # CORS settings
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+#     "https://instagram-ffns9kn6u-abrars-projects-9b912271.vercel.app",
+#     "https://instagram-ochre-kappa.vercel.app",
+# ]
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
@@ -133,6 +133,9 @@ print("CORS_ALLOWED_ORIGINS:", CORS_ALLOWED_ORIGINS)
 
 
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
+
+
 
 # Production security settings
 SECURE_SSL_REDIRECT = False  # Turn this True after SSL verified on Render
