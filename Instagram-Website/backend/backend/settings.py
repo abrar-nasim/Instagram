@@ -44,9 +44,6 @@ MIDDLEWARE = [
 ]
 
 
-print("🚨 CORS CONFIG LOADED")
-print("CORS_ALLOWED_ORIGINS:", CORS_ALLOWED_ORIGINS)
-
 
 # URL settings
 ROOT_URLCONF = 'backend.urls'
@@ -107,6 +104,10 @@ CSRF_TRUSTED_ORIGINS = [
     "https://instagram-ffns9kn6u-abrars-projects-9b912271.vercel.app",
     "https://instagram-ochre-kappa.vercel.app",
 ]
+
+
+print("🚨 CORS CONFIG LOADED")
+print("CORS_ALLOWED_ORIGINS:", CORS_ALLOWED_ORIGINS)
 
 
 
