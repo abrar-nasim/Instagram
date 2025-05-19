@@ -21,6 +21,5 @@ urlpatterns = [
 
     path('<int:id>/', ListingDetailView.as_view(), name='listing-detail'),
 
-    path('', views.test_listings_view),
 
 ]
