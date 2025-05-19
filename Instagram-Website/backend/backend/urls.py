@@ -9,7 +9,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
 
+from django.core.management import call_command 
+""" 
+temporary
+"""
+
+
+
 print("✅ This is the correct urls.py being loaded.")
+
+def run_migrations_view(request):
+    call_command('migrate')
+    return HttpResponse("✅ Migrations applied successfully.")
+
 
 # View functions
 def home_test_view(request):
@@ -22,6 +34,8 @@ urlpatterns = [
     path('api/users/', include('users.urls')),  # User-related endpoints
     path('api/listings/', include('listings.urls')),  # Instagram listings endpoints
     path('api/admin_dashboard/', include('admin_dashboard.urls')),  # Admin dashboard endpoints
+    path('run-migrations/', run_migrations_view),
+
 ]
 
 # Serve media files during development
