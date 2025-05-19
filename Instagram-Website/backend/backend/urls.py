@@ -9,24 +9,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
 
-from django.core.management import call_command 
-""" 
-temporary
-"""
 
 
 
 print("✅ This is the correct urls.py being loaded.")
 
-def run_migrations_view(request):
-    import sys
-    from io import StringIO
-
-    out = StringIO()
-    call_command('migrate', stdout=out)
-    output = out.getvalue()
-
-    return HttpResponse(f"✅ Migrations ran. Output:<br><pre>{output}</pre>")
 
 
 
