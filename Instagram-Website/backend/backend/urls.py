@@ -19,8 +19,15 @@ temporary
 print("✅ This is the correct urls.py being loaded.")
 
 def run_migrations_view(request):
-    call_command('migrate')
-    return HttpResponse("✅ Migrations applied successfully.")
+    import sys
+    from io import StringIO
+
+    out = StringIO()
+    call_command('migrate', stdout=out)
+    output = out.getvalue()
+
+    return HttpResponse(f"✅ Migrations ran. Output:<br><pre>{output}</pre>")
+
 
 
 # View functions
