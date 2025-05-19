@@ -28,7 +28,6 @@ urlpatterns = [
     path('api/users/', include('users.urls')),  # User-related endpoints
     path('api/listings/', include('listings.urls')),  # Instagram listings endpoints
     path('api/admin_dashboard/', include('admin_dashboard.urls')),  # Admin dashboard endpoints
-    path('run-migrations/', run_migrations_view),
 
 ]
 
