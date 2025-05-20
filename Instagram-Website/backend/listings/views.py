@@ -73,18 +73,3 @@ class InquiryView(APIView):
             return Response(serializer.errors, status=400)
 
 
-# 🔹 Temporary Admin Account Creators (DO NOT KEEP IN PRODUCTION)
-
-def create_temp_admin(request):
-    if not User.objects.filter(username="admin").exists():
-        User.objects.create_superuser("admin", "admin@example.com", "admin123")
-        return HttpResponse("✅ Superuser 'admin' created with password 'admin123'")
-    else:
-        return HttpResponse("⚠️ Superuser already exists")
-
-
-def force_create_admin(request):
-    if not User.objects.filter(username="newadmin").exists():
-        User.objects.create_superuser("newadmin", "admin@example.com", "newpassword123")
-        return HttpResponse("✅ New superuser 'newadmin' created with password 'newpassword123'")
-    return HttpResponse("⚠️ User already exists")

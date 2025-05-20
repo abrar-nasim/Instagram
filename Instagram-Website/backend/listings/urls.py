@@ -13,6 +13,5 @@ urlpatterns = [
     path('inquiries/', InquiryView.as_view(), name='inquiries'),
     path('<int:id>/', ListingDetailView.as_view(), name='listing-detail'),
     path('test/', test_listings_view),  # Optional test route
-    path('create-temp-admin/', create_temp_admin),  # Creates 'admin' / 'admin123'
-    path('force-create-admin/', force_create_admin),  # Creates 'newadmin' / 'newpassword123'
+    
 ]
