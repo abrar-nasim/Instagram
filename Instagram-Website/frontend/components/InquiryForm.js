@@ -37,7 +37,8 @@ export default function InquiryForm({ listing }) {
       setStatus('Inquiry submitted successfully!');
       setFormData({ name: '', email: '', message: '', proposed_price: '' });
     } catch (error) {
-      console.error('Error submitting inquiry:', error);
+      console.error('Error submitting inquiry:', error?.response?.data || error.message);
+
       setStatus('Failed to submit inquiry.');
     }
   };
