@@ -54,12 +54,25 @@ class InquiryView(APIView):
         response['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
         return response
 
+    # def post(self, request):
+    #     serializer = InquirySerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def post(self, request):
         serializer = InquirySerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            try:
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            except Exception as e:
+                print("❌ Error during serializer.save():", str(e))
+                return Response({"detail": "Internal server error", "debug": str(e)}, status=500)
+        else:
+            print("❌ Inquiry validation errors:", serializer.errors)
+            return Response(serializer.errors, status=400)
 
 
 from rest_framework.generics import RetrieveAPIView
