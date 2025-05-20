@@ -10,6 +10,7 @@ from rest_framework import generics
 from .models import InstagramListing
 from .serializers import ListingSerializer
 from django.http import HttpResponse
+from .serializers import InquirySerializer  # ✅ Required for InquiryView
 
 def test_listings_view(request):
     return HttpResponse("✅ Listings API is working!")
