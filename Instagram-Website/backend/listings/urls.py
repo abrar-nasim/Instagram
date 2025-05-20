@@ -4,8 +4,7 @@ from .views import (
     InquiryView,
     ListingDetailView,
     test_listings_view,
-    create_temp_admin,
-    force_create_admin
+    
 )
 
 urlpatterns = [
