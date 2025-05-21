@@ -9,10 +9,11 @@ export default function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <script
-          src={`https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&AW3D4uo3L5NKLTOmbaqGdfVc-NKvjeXfuPAq0_MuOI-w5c-fVb9N4sBS8E7nfe-JWioPXIqA1Xv_RX0D=USD`}
+          src="https://www.paypal.com/sdk/js?client-id=AW3D4uo3L5NKLTOmbaqGdfVc-NKvjeXfuPAq0_MuOI-w5c-fVb9N4sBS8E7nfe-JWioPXIqA1Xv_RX0D&currency=USD"
           data-sdk-integration-source="button-factory"
         ></script>
-      </Head>
+</Head>
+
       <main className={inter.className}>
         <Component {...pageProps} />
       </main>
