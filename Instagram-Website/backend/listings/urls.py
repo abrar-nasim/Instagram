@@ -1,4 +1,6 @@
 from django.urls import path
+from .views import VerifyPaymentView
+
 from .views import (
     ListingListCreateView,
     InquiryView,
@@ -13,4 +15,8 @@ urlpatterns = [
     path('<int:id>/', ListingDetailView.as_view(), name='listing-detail'),
     path('test/', test_listings_view),  # Optional test route
     
+]
+
+urlpatterns += [
+    path('verify-payment/', VerifyPaymentView.as_view(), name='verify-payment'),
 ]

@@ -73,3 +73,74 @@ class InquiryView(APIView):
             return Response(serializer.errors, status=400)
 
 
+import requests
+from django.conf import settings
+from .models import Payment
+
+class VerifyPaymentView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        order_id = request.data.get("orderID")
+        listing_id = request.data.get("listingID")
+
+        if not order_id or not listing_id:
+            return Response({"error": "Missing order ID or listing ID"}, status=400)
+
+        # Get access token from PayPal
+        auth = (settings.PAYPAL_CLIENT_ID, settings.PAYPAL_SECRET)
+        data = {'grant_type': 'client_credentials'}
+        res = requests.post('https://api-m.paypal.com/v1/oauth2/token', auth=auth, data=data)
+
+        if res.status_code != 200:
+            return Response({"error": "Failed to authenticate with PayPal"}, status=500)
+
+        access_token = res.json()['access_token']
+
+        # Verify the payment with PayPal
+        headers = {'Authorization': f'Bearer {access_token}'}
+        res = requests.get(f'https://api-m.paypal.com/v2/checkout/orders/{order_id}', headers=headers)
+
+        if res.status_code != 200:
+            return Response({"error": "Invalid PayPal order"}, status=400)
+
+        order_data = res.json()
+        status = order_data['status']
+        purchase_unit = order_data['purchase_units'][0]
+        amount = purchase_unit['amount']['value']
+        currency = purchase_unit['amount']['currency_code']
+        transaction_id = order_data['id']
+        buyer_email = order_data['payer']['email_address']
+        buyer_name = order_data['payer']['name']['given_name']
+
+        if status != "COMPLETED":
+            return Response({"error": "Payment not completed"}, status=400)
+
+        # Load and check listing
+        try:
+            listing = InstagramListing.objects.get(id=listing_id)
+        except InstagramListing.DoesNotExist:
+            return Response({"error": "Listing not found"}, status=404)
+
+        # Check if already sold
+        if listing.is_sold:
+            return Response({"error": "Listing already sold"}, status=400)
+
+        # Check amount (match USD price)
+        expected_amount = round(float(listing.price) / 83, 2)
+        if float(amount) != expected_amount:
+            return Response({"error": "Amount mismatch"}, status=400)
+
+        # Save payment and mark sold
+        Payment.objects.create(
+            listing=listing,
+            buyer_name=buyer_name,
+            buyer_email=buyer_email,
+            paypal_transaction_id=transaction_id,
+            amount=amount,
+            currency=currency
+        )
+        listing.is_sold = True
+        listing.save()
+
+        return Response({"success": True, "message": "Payment verified & listing marked sold"})

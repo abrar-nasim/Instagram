@@ -30,3 +30,16 @@ class Inquiry(models.Model):
 
     def __str__(self):
         return f'Inquiry from {self.name}'
+    
+
+class Payment(models.Model):
+    listing = models.ForeignKey(InstagramListing, on_delete=models.CASCADE)
+    buyer_name = models.CharField(max_length=100)
+    buyer_email = models.EmailField()
+    paypal_transaction_id = models.CharField(max_length=255, unique=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    currency = models.CharField(max_length=10)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Payment for {self.listing.username} by {self.buyer_email}'
