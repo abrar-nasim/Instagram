@@ -140,6 +140,8 @@ import {
   ShieldCheck, Verified, Headphones
 } from 'lucide-react';
 
+const [status, setStatus] = useState('');
+
 // Reusable field block
 const Field = ({ icon, label, value }) => (
   <p className="flex items-center gap-3 text-gray-700 text-sm sm:text-base bg-gray-50 px-3 py-2 rounded-lg border border-gray-100 shadow-sm">
@@ -189,26 +191,28 @@ export default function ListingDetail() {
 
       window.paypal.Buttons({
         createOrder: (data, actions) => {
+          const usdAmount = (listing.price / 83).toFixed(2);
           return actions.order.create({
             purchase_units: [{
               description: `Instagram Page @${listing.username}`,
               amount: {
                 currency_code: 'USD',
-                value: (listing.price / 83).toFixed(2)  // ₹ to USD conversion
+                value: usdAmount
               }
             }]
           });
         },
         onApprove: async (data, actions) => {
-          const order = await actions.order.capture();
-          alert("✅ Payment successful! We’ll contact you shortly.");
-          // Optionally send order.id to backend here
+          const details = await actions.order.capture();
+          setStatus("✅ Payment successful! We’ll contact you shortly.");
+          console.log("Buyer Info:", details.payer);
         },
         onError: (err) => {
           console.error("❌ PayPal Error:", err);
           alert("❌ Payment failed.");
         }
       }).render('#paypal-button-container');
+
     }
   }, [listing]);
 
