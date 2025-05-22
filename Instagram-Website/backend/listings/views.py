@@ -144,3 +144,14 @@ class VerifyPaymentView(APIView):
         listing.save()
 
         return Response({"success": True, "message": "Payment verified & listing marked sold"})
+
+
+from django.core.management import call_command
+from django.http import JsonResponse
+
+def run_migrations(request):
+    try:
+        call_command('migrate', interactive=False)
+        return JsonResponse({"status": "✅ Migrations applied successfully."})
+    except Exception as e:
+        return JsonResponse({"status": "❌ Migration error", "error": str(e)}, status=500)

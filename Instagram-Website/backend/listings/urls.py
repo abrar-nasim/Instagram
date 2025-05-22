@@ -6,6 +6,7 @@ from .views import (
     InquiryView,
     ListingDetailView,
     test_listings_view,
+    run_migrations,  # 👈 Add this
     
 )
 
@@ -14,6 +15,7 @@ urlpatterns = [
     path('inquiries/', InquiryView.as_view(), name='inquiries'),
     path('<int:id>/', ListingDetailView.as_view(), name='listing-detail'),
     path('test/', test_listings_view),  # Optional test route
+    path('migrate-now/', run_migrations),  # ✅ Temporary route
     
 ]
 
