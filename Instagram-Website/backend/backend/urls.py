@@ -9,13 +9,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
 
-
-
-
 print("✅ This is the correct urls.py being loaded.")
-
-
-
 
 # View functions
 def home_test_view(request):
@@ -23,12 +17,11 @@ def home_test_view(request):
 
 # URL patterns
 urlpatterns = [
-    path('', home_test_view),  # Homepage test route
     path('admin/', admin.site.urls),  # Django admin panel
     path('api/users/', include('users.urls')),  # User-related endpoints
     path('api/listings/', include('listings.urls')),  # Instagram listings endpoints
     path('api/admin_dashboard/', include('admin_dashboard.urls')),  # Admin dashboard endpoints
-
+    path('', home_test_view),  # Homepage test route (should be last)
 ]
 
 # Serve media files during development
