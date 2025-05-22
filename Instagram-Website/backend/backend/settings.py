@@ -12,7 +12,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") + [
-    "instagram-production-b0c00.up.railway.app"
+    "instagram-production-b0c00.up.railway.app",
+    "instagram-backend-clean.onrender.com"  # Add your Render host
 ]
 
 # Installed apps
@@ -32,19 +33,16 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',     # ✅ MUST BE FIRST
-    'backend.middleware.CORSMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',     # Must be first
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # After SecurityMiddleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',  # ✅ This should come AFTER corsheaders
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-
 
 # URL settings
 ROOT_URLCONF = 'backend.urls'
@@ -93,13 +91,14 @@ USE_TZ = True
 # Default auto field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# # CORS settings
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",
-#     "http://127.0.0.1:3000",
-#     "https://instagram-ffns9kn6u-abrars-projects-9b912271.vercel.app",
-#     "https://instagram-ochre-kappa.vercel.app",
-# ]
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://instagram-git-main-abrars-projects-9b912271.vercel.app",
+    "https://instagram-ochre-kappa.vercel.app",
+]
+
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
@@ -121,35 +120,32 @@ CORS_ALLOW_METHODS = [
     "PUT",
 ]
 
-
 CSRF_TRUSTED_ORIGINS = [
-    "https://instagram-ffns9kn6u-abrars-projects-9b912271.vercel.app",
+    "https://instagram-git-main-abrars-projects-9b912271.vercel.app",
     "https://instagram-ochre-kappa.vercel.app",
+    "https://instagram-backend-clean.onrender.com",
 ]
-
-
-# print("🚨 CORS CONFIG LOADED")
-# print("CORS_ALLOWED_ORIGINS:", CORS_ALLOWED_ORIGINS)
-
-
 
 CORS_ALLOW_CREDENTIALS = True
 
-
-
 # Production security settings
-SECURE_SSL_REDIRECT = False  # Turn this True after SSL verified on Render
-SESSION_COOKIE_SECURE = False  # Same
-CSRF_COOKIE_SECURE = False  # Same
+SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', 'False') == 'True'
+SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE', 'False') == 'True'
+CSRF_COOKIE_SECURE = os.getenv('CSRF_COOKIE_SECURE', 'False') == 'True'
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 
+# PayPal settings
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', 'AW3D4uo3L5NKLTOmbaqGdfVc-NKvjeXfuPAq0_MuOI-w5c-fVb9N4sBS8E7nfe-JWioPXIqA1Xv_RX0D')
+PAYPAL_SECRET = os.getenv('PAYPAL_SECRET', 'EJG4qppW11H6XBH72CHlMEs3sUvES84_PDyjKbmXlrICZ4V5Pfyv5iXmOxiSMSq0CRBqzlgwZGFKkR-P')
 
-CORS_ALLOWED_ORIGINS = [
-    "https://instagram-git-main-abrars-projects-9b912271.vercel.app"
-]
-
-
-PAYPAL_CLIENT_ID = 'AW3D4uo3L5NKLTOmbaqGdfVc-NKvjeXfuPAq0_MuOI-w5c-fVb9N4sBS8E7nfe-JWioPXIqA1Xv_RX0D'
-PAYPAL_SECRET = 'EJG4qppW11H6XBH72CHlMEs3sUvES84_PDyjKbmXlrICZ4V5Pfyv5iXmOxiSMSq0CRBqzlgwZGFKkR-P'
+# DRF settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+}
