@@ -96,7 +96,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://instagram-git-main-abrars-projects-9b912271.vercel.app",
-    "https://instagram-abrars-projects-9b912271.vercel.app/",
+    "https://instagram-abrars-projects-9b912271.vercel.app",
     "https://instagram-ochre-kappa.vercel.app",
 ]
 
