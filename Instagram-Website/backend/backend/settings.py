@@ -124,6 +124,7 @@ CORS_ALLOW_METHODS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://instagram-git-main-abrars-projects-9b912271.vercel.app",
     "https://instagram-ochre-kappa.vercel.app",
+    "https://instagram-abrars-projects-9b912271.vercel.app",
     "https://instagram-backend-clean.onrender.com",
 ]
 
@@ -150,3 +151,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ],
 }
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+]
